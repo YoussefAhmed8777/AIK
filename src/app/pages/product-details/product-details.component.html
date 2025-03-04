@@ -1,0 +1,82 @@
+<section class="bg-gray-300 py-3">
+  <div class="container w-[80%] mx-auto mt-6 bg-white rounded">
+    <div class="grid grid-cols-1 lg:w-[85%] mx-auto">
+      <div class="product md:flex md:justify-center p-2 items-start">
+        <div class="product-img mx-auto lg:w-[35%] py-5 my-5">
+          <img [src]="productData.imageCover" class="w-full mx-auto h-80" alt="product image">
+        </div>
+        <div class="product-details text-start md:w-[45%] text-black my-3 p-3">
+          <h2 class="my-4 text-xl font-semibold"> {{productData.title}} </h2>
+          <!-- <p class="text-sm font-light">Brand: <span class="text-blue-500"> <a [routerLink]="['/brands', productData.category._id]" class="cursor-pointer hover:underline"> {{productData.brand.name}} </a> </span> </p> -->
+          <!-- <p class="text-sm font-light">Category: <span class="text-blue-500"> <a [routerLink]="['/categories', productData.category._id]" class="cursor-pointer hover:underline"> {{productData.category.name}} </a> </span> </p> -->
+          <div class="ratings">
+            @if (productData.ratingsAverage> 4.5) {
+              <div class="rating">
+                <span class="text-sm font-thin hover:underline text-yellow-500"><i class="fa-solid fa-star"></i></span>
+                <span class="text-sm font-thin hover:underline text-yellow-500"><i class="fa-solid fa-star"></i></span>
+                <span class="text-sm font-thin hover:underline text-yellow-500"><i class="fa-solid fa-star"></i></span>
+                <span class="text-sm font-thin hover:underline text-yellow-500"><i class="fa-solid fa-star"></i></span>
+                <span class="text-sm font-thin hover:underline text-yellow-500"><i class="fa-solid fa-star"></i></span>
+                <span class="text-sm font-thin hover:underline text-gray-900"> ({{productData.ratingsAverage}}) </span>
+              </div>
+            }@else if (productData.ratingsAverage> 4) {
+              <div class="rating">
+                <span class="text-sm font-thin hover:underline text-yellow-500"><i class="fa-solid fa-star"></i></span>
+                <span class="text-sm font-thin hover:underline text-yellow-500"><i class="fa-solid fa-star"></i></span>
+                <span class="text-sm font-thin hover:underline text-yellow-500"><i class="fa-solid fa-star"></i></span>
+                <span class="text-sm font-thin hover:underline text-yellow-500"><i class="fa-solid fa-star"></i></span>
+                <span class="text-sm font-thin hover:underline text-yellow-500"><i class="fa-solid fa-star-half-stroke"></i></span>
+                <span class="text-sm font-thin hover:underline text-gray-900"> ({{productData.ratingsAverage}}) </span>
+              </div>
+            }@else if (productData.ratingsAverage >= 3) {
+              <div class="rating">
+                <span class="text-sm font-thin hover:underline text-yellow-500"><i class="fa-solid fa-star"></i></span>
+                <span class="text-sm font-thin hover:underline text-yellow-500"><i class="fa-solid fa-star"></i></span>
+                <span class="text-sm font-thin hover:underline text-yellow-500"><i class="fa-solid fa-star"></i></span>
+                <span class="text-sm font-thin hover:underline text-yellow-500"><i class="fa-regular fa-star"></i></span>
+                <span class="text-sm font-thin hover:underline text-yellow-500"><i class="fa-regular fa-star"></i></span>
+                <span class="text-sm font-thin hover:underline text-gray-900"> ({{productData.ratingsAverage}}) </span>
+              </div>
+            }@else {
+              <div class="rating">
+                <span class="text-sm font-thin hover:underline text-yellow-500"><i class="fa-solid fa-star"></i></span>
+                <span class="text-sm font-thin hover:underline text-yellow-500"><i class="fa-solid fa-star"></i></span>
+                <span class="text-sm font-thin hover:underline text-yellow-500"><i class="fa-regular fa-star"></i></span>
+                <span class="text-sm font-thin hover:underline text-yellow-500"><i class="fa-regular fa-star"></i></span>
+                <span class="text-sm font-thin hover:underline text-yellow-500"><i class="fa-regular fa-star"></i></span>
+                <span class="text-sm font-thin hover:underline text-gray-900"> ({{productData.ratingsAverage}}) </span>
+              </div>
+            }
+          </div>
+          <p class="my-2 text-sm price">
+            <span class="text-base font-semibold mb-2">Price:</span>
+            {{productData.price}} EGP 
+          </p>
+          @if (productData.quantity>0) {
+            <p>In Stock</p>
+          }
+          <div class="btns mt-2 space-x-3">
+            <button (click)="addToCart(productData.id)" type="button" class="text-white bg-sky-500 p-2 rounded-md hover:bg-sky-700 transition-all duration-300"> 
+              Add to cart <i class="fa-solid fa-cart-shopping ms-1"></i> 
+            </button>
+            <button type="button" class="text-white bg-sky-500 p-2 rounded-md hover:bg-sky-700 transition-all duration-300"> 
+              <i class="fa-regular fa-heart"></i>               
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="container w-[80%] mx-auto mt-6 bg-white rounded">
+    <div class="grid grid-cols-1 lg:w-[85%] mx-auto">
+      <div class="product md:flex md:justify-center p-2 items-start my-3">
+        <div class="product-details flex flex-col text-start w-fit text-black my-3 p-3">
+          <p class="my-2 text-sm desc">
+            <span class="block text-base font-bold mb-2 border-b">Product Description:</span>
+            {{productData.description}} 
+          </p>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
