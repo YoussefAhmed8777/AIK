@@ -8,7 +8,7 @@ import { Observable } from 'rxjs';
 export class CartService {
 
   http=inject(HttpClient);
-  userToken:string=JSON.stringify(localStorage.getItem('userToken'));
+  userToken:string=JSON.stringify(localStorage.getItem('userToken')).replaceAll('"',''); //the error was that json stringify returns the value of the key with ""
 
   addToCart(id:string):Observable<any>{
     return this.http.post(`https://ecommerce.routemisr.com/api/v1/cart`,
@@ -28,5 +28,37 @@ export class CartService {
         token:this.userToken,
       }
     });
+  }
+
+  removeFromCart(id:string):Observable<any>{
+    return this.http.delete(`https://ecommerce.routemisr.com/api/v1/cart/${id}`,
+      {
+        headers:{
+          token:this.userToken,
+        }
+      }
+    )
+  }
+
+  updateCartProductQuantity(id:string, count:number):Observable<any>{
+    return this.http.put(`https://ecommerce.routemisr.com/api/v1/cart/${id}`,
+      {
+      "count": count,
+      },{
+        headers:{
+          token:this.userToken,
+        }
+      }
+    )
+  }
+
+  emptyTheCart():Observable<any>{
+    return this.http.delete(`https://ecommerce.routemisr.com/api/v1/cart`,
+      {
+        headers:{
+          token:this.userToken,
+        }
+      }
+    )
   }
 }

@@ -1,6 +1,6 @@
 <section>
   <div class="container mx-auto my-5 lg:w-[60%]">
-    <div class="toasts relative -top-5 z-10">
+    <div class="toasts relative top-10 z-10">
       @if (removedMessage!='') {
         <div id="toast-success" class="absolute -end-3 flex items-center w-full max-w-xs p-4 mb-4 text-gray-500 bg-white rounded-lg shadow-md" role="alert">
           <div class="inline-flex items-center justify-center shrink-0 w-6 h-6 text-green-500 bg-green-100 rounded-lg">
@@ -9,13 +9,7 @@
               </svg>
               <span class="sr-only">Check icon</span>
           </div>
-          <div class="ms-3 text-sm font-normal"> 
-            @if (removedMessage == 'succes') {
-              Product is removed {{removedMessage}}fully 
-            }@else {
-              Product is removed {{removedMessage}} 
-            }
-          </div>
+          <div class="ms-3 text-sm font-normal">Product is removed {{removedMessage}}fully</div>
         </div>
       }@else if(errorMessage!='') {
         <div id="toast-danger" class="absolute -end-12 flex items-center w-full max-w-xs p-4 mb-4 text-gray-500 bg-white rounded-lg shadow-md" role="alert">
@@ -29,55 +23,50 @@
         </div>
       }
     </div>
-    <div class="cart bg-white">
+    <div class="wishlist bg-white">
       <div class="head text-center border-b mt-5">
-        <h2 class="font-bold text-2xl">Your shopping cart</h2>
-        <div class="more-details my-2 flex flex-wrap justify-center items-center space-x-6">
-          <p> <span class="font-semibold"> Products: </span> {{cartDetails.products.length}} </p>
-          <p> <span class="font-semibold"> Total Checkout: </span> {{cartDetails.totalCartPrice | currency:'EGP '}} </p>
-          <button type="button" (click)="emptyCart()" class="bg-red-600 text-white my-2 py-2 px-3 rounded-lg"> Empty cart <i class="fa-regular fa-trash-can"></i> </button>
-        </div>
+        <h2 class="font-bold my-3 text-2xl">Your shopping wishlist</h2>
       </div>
       <div class="body mb-5 p-3 mx-auto">
-        @if (cartCount ==0 ) {
-          <p class="text-center">There is no products added in your cart</p>
+        @if (wishCount === 0) {
+          <p class="text-center">There is no products added in your wishlist</p>
         }
-        @for (product of cartDetails.products; track $index) {
+        @for (product of wishListDetails.data; track $index) {
           <div class="product lg:w-[90%] mx-auto bg-blue-600 rounded-2xl my-3 p-2 flex justify-center items-center">
             <div class="img w-[45%]">
-              <img [src]="product.product.imageCover" class="md:w-52 p-3 mx-auto rounded-3xl" alt="product image">
+              <img [src]="product.imageCover" class="md:w-52 lg:h-60 p-3 mx-auto rounded-3xl" alt="product image">
             </div>
-            <div class="content w-[55%] text-white p-4">
-              <h3 class="font-semibold text-xl cursor-pointer"> <a [routerLink]="['/product-details', product.product.id]" target="_blank" class="hover:text-slate-900"> {{product.product.title}} </a> </h3>
-              <p> Brand: <a [routerLink]="['/brands']" target="_blank" class="hover:text-slate-900 hover:underline"> {{product.product.brand.name}} </a> </p>
-              <p> Category: <a [routerLink]="['/categories']" target="_blank" class="hover:text-slate-900 hover:underline"> {{product.product.category.name}} </a> </p>
+            <div class="content w-[55%] text-white">
+              <h3 class="font-semibold text-xl cursor-pointer"> <a [routerLink]="['/product-details', product.id]" target="_blank" class="hover:text-slate-900"> {{product.title}} </a> </h3>
+              <p> Brand: <a [routerLink]="['/brands']" target="_blank" class="hover:text-slate-900 hover:underline"> {{product.brand.name}} </a> </p>
+              <p> Category: <a [routerLink]="['/categories']" target="_blank" class="hover:text-slate-900 hover:underline"> {{product.category.name}} </a> </p>
               <div class="ratings">
-                @if (product.product.ratingsAverage> 4.5) {
+                @if (product.ratingsAverage> 4.5) {
                   <div class="rating">
                     <span class="text-sm font-thin hover:underline text-yellow-500"><i class="fa-solid fa-star"></i></span>
                     <span class="text-sm font-thin hover:underline text-yellow-500"><i class="fa-solid fa-star"></i></span>
                     <span class="text-sm font-thin hover:underline text-yellow-500"><i class="fa-solid fa-star"></i></span>
                     <span class="text-sm font-thin hover:underline text-yellow-500"><i class="fa-solid fa-star"></i></span>
                     <span class="text-sm font-thin hover:underline text-yellow-500"><i class="fa-solid fa-star"></i></span>
-                    <span class="text-sm font-thin hover:underline text-white"> ({{product.product.ratingsAverage}}) </span>
+                    <span class="text-sm font-thin hover:underline text-white"> ({{product.ratingsAverage}}) </span>
                   </div>
-                }@else if (product.product.ratingsAverage> 4) {
+                }@else if (product.ratingsAverage> 4) {
                   <div class="rating">
                     <span class="text-sm font-thin hover:underline text-yellow-500"><i class="fa-solid fa-star"></i></span>
                     <span class="text-sm font-thin hover:underline text-yellow-500"><i class="fa-solid fa-star"></i></span>
                     <span class="text-sm font-thin hover:underline text-yellow-500"><i class="fa-solid fa-star"></i></span>
                     <span class="text-sm font-thin hover:underline text-yellow-500"><i class="fa-solid fa-star"></i></span>
                     <span class="text-sm font-thin hover:underline text-yellow-500"><i class="fa-solid fa-star-half-stroke"></i></span>
-                    <span class="text-sm font-thin hover:underline text-white"> ({{product.product.ratingsAverage}}) </span>
+                    <span class="text-sm font-thin hover:underline text-white"> ({{product.ratingsAverage}}) </span>
                   </div>
-                }@else if (product.product.ratingsAverage >= 3) {
+                }@else if (product.ratingsAverage >= 3) {
                   <div class="rating">
                     <span class="text-sm font-thin hover:underline text-yellow-500"><i class="fa-solid fa-star"></i></span>
                     <span class="text-sm font-thin hover:underline text-yellow-500"><i class="fa-solid fa-star"></i></span>
                     <span class="text-sm font-thin hover:underline text-yellow-500"><i class="fa-solid fa-star"></i></span>
                     <span class="text-sm font-thin hover:underline text-yellow-500"><i class="fa-regular fa-star"></i></span>
                     <span class="text-sm font-thin hover:underline text-yellow-500"><i class="fa-regular fa-star"></i></span>
-                    <span class="text-sm font-thin hover:underline text-white"> ({{product.product.ratingsAverage}}) </span>
+                    <span class="text-sm font-thin hover:underline text-white"> ({{product.ratingsAverage}}) </span>
                   </div>
                 }@else {
                   <div class="rating">
@@ -86,25 +75,15 @@
                     <span class="text-sm font-thin hover:underline text-yellow-500"><i class="fa-regular fa-star"></i></span>
                     <span class="text-sm font-thin hover:underline text-yellow-500"><i class="fa-regular fa-star"></i></span>
                     <span class="text-sm font-thin hover:underline text-yellow-500"><i class="fa-regular fa-star"></i></span>
-                    <span class="text-sm font-thin hover:underline text-white"> ({{product.product.ratingsAverage}}) </span>
+                    <span class="text-sm font-thin hover:underline text-white"> ({{product.ratingsAverage}}) </span>
                   </div>
                 }
               </div>
-              <div class="product-quantity flex items-center space-x-2 my-2">
-                <button type="button" (click)="updateCartProductQuantity(product.product.id, product.count-1)"> <i class="fa-solid fa-circle-minus text-xl"></i> </button>
-                <p> {{product.count}} </p>
-                <button type="button" (click)="updateCartProductQuantity(product.product.id, product.count+1)"> <i class="fa-solid fa-circle-plus text-xl"></i> </button>
-              </div>
               <p> {{product.price | currency:'EGP '}} </p>
               <div class="btns my-2">
-                <button type="button" (click)="removeProduct(product.product.id)" class="bg-red-800 text-white p-2 rounded-2xl"> <i class="fa-regular fa-trash-can mx-1"></i> Remove </button>
+                <button type="button" (click)="removeProduct(product.id)" class="bg-red-800 text-white p-2 rounded-2xl"> <i class="fa-regular fa-trash-can mx-1"></i> Remove </button>
               </div>
             </div>
-          </div>
-        }
-        @if (cartCount>0) {
-          <div class="btns-2 text-end mt-5 flex justify-end items-center">
-            <button [routerLink]="['/checkout', cartId]" type="button" class="bg-blue-600 text-white py-2 px-3 rounded-xl"> Proceed to checkout <i class="fa-solid fa-arrow-right-long"></i> </button>
           </div>
         }
       </div>

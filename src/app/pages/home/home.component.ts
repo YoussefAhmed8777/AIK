@@ -1,10 +1,13 @@
 import { FormsModule } from '@angular/forms';
-import { Component, inject, OnDestroy, OnInit } from '@angular/core';
+import { Component, HostListener, inject, OnDestroy, OnInit } from '@angular/core';
 import { ProductsService } from '../../core/services/products.service';
 import { Product } from '../../core/interfaces/product';
 import { RouterLink } from '@angular/router';
 import { CurrencyPipe, DatePipe } from '@angular/common';
 import { SearchPipe } from '../../shared/pipes/search.pipe';
+import * as AOS from 'aos';
+import { CartService } from '../../core/services/cart.service';
+import { WishlistService } from '../../core/services/wishlist.service';
 
 @Component({
   selector: 'app-home',
@@ -12,15 +15,21 @@ import { SearchPipe } from '../../shared/pipes/search.pipe';
   templateUrl: './home.component.html',
   styleUrl: './home.component.scss'
 })
-export class HomeComponent implements OnInit, OnDestroy {
+export class HomeComponent implements OnInit {
   product=inject(ProductsService);
+  cart=inject(CartService);
+  wishList=inject(WishlistService);
   productList:Product[]=[]
+  addedMessage:string='';  
+  errorMessage:string='';  
+
   // searchTerm:string=''
   // currentDate= new Date()
 
   ngOnInit(): void {
     this.getProduct();
-  }
+    AOS.init();
+  };
 
   getProduct(){
     this.product.getProducts().subscribe({
@@ -30,9 +39,31 @@ export class HomeComponent implements OnInit, OnDestroy {
       },error:(error)=>{
       }
     })
-  }
+  };
 
-  ngOnDestroy(): void {
-    this.getProduct();
+  addToCart(id:string):void{
+    this.cart.addToCart(id).subscribe({
+      next:(res)=>{
+        console.log(res);
+        this.addedMessage=res.message;
+        console.log(this.addedMessage);
+      },error:(err)=>{
+        console.log(err);
+        this.errorMessage=err.message;
+        console.log(this.errorMessage);
+      }
+    })
+  };
+
+  addToWishlist(id:string):void{
+    this.wishList.addToWishlist(id).subscribe({
+      next:(res)=>{
+        console.log(res);
+        this.addedMessage=res.message;
+      },error:(err)=>{
+        console.log(err);
+        this.errorMessage=err.message;
+      }
+    })
   }
 }

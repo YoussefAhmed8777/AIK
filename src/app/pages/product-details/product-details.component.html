@@ -1,5 +1,28 @@
 <section class="bg-gray-300 py-3">
-  <div class="container w-[80%] mx-auto mt-6 bg-white rounded">
+  <div class="container w-[80%] mx-auto mt-10 bg-white rounded">
+    <div class="toasts relative -top-5">
+      @if (addedMessage!='') {
+        <div id="toast-success" class="absolute -end-12 flex items-center w-full max-w-xs p-4 mb-4 text-gray-500 bg-white rounded-lg shadow-md" role="alert">
+          <div class="inline-flex items-center justify-center shrink-0 w-6 h-6 text-green-500 bg-green-100 rounded-lg">
+              <svg class="w-4 h-4" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 20 20">
+                  <path d="M10 .5a9.5 9.5 0 1 0 9.5 9.5A9.51 9.51 0 0 0 10 .5Zm3.707 8.207-4 4a1 1 0 0 1-1.414 0l-2-2a1 1 0 0 1 1.414-1.414L9 10.586l3.293-3.293a1 1 0 0 1 1.414 1.414Z"/>
+              </svg>
+              <span class="sr-only">Check icon</span>
+          </div>
+          <div class="ms-3 text-sm font-normal">{{addedMessage}}</div>
+        </div>
+      }@else if(errorMessage!='') {
+        <div id="toast-danger" class="absolute -end-12 flex items-center w-full max-w-xs p-4 mb-4 text-gray-500 bg-white rounded-lg shadow-md" role="alert">
+          <div class="inline-flex items-center justify-center shrink-0 w-8 h-8 text-red-500 bg-red-100 rounded-lg">
+              <svg class="w-5 h-5" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 20 20">
+                  <path d="M10 .5a9.5 9.5 0 1 0 9.5 9.5A9.51 9.51 0 0 0 10 .5Zm3.707 11.793a1 1 0 1 1-1.414 1.414L10 11.414l-2.293 2.293a1 1 0 0 1-1.414-1.414L8.586 10 6.293 7.707a1 1 0 0 1 1.414-1.414L10 8.586l2.293-2.293a1 1 0 0 1 1.414 1.414L11.414 10l2.293 2.293Z"/>
+              </svg>
+              <span class="sr-only">Error icon</span>
+          </div>
+          <div class="ms-3 text-sm font-normal">{{errorMessage}}</div>
+        </div>
+      }
+    </div>
     <div class="grid grid-cols-1 lg:w-[85%] mx-auto">
       <div class="product md:flex md:justify-center p-2 items-start">
         <div class="product-img mx-auto lg:w-[35%] py-5 my-5">
@@ -7,8 +30,8 @@
         </div>
         <div class="product-details text-start md:w-[45%] text-black my-3 p-3">
           <h2 class="my-4 text-xl font-semibold"> {{productData.title}} </h2>
-          <!-- <p class="text-sm font-light">Brand: <span class="text-blue-500"> <a [routerLink]="['/brands', productData.category._id]" class="cursor-pointer hover:underline"> {{productData.brand.name}} </a> </span> </p> -->
-          <!-- <p class="text-sm font-light">Category: <span class="text-blue-500"> <a [routerLink]="['/categories', productData.category._id]" class="cursor-pointer hover:underline"> {{productData.category.name}} </a> </span> </p> -->
+          <p class="text-sm font-light">Brand: <span class="text-blue-500"> <a [routerLink]="['/brands', productData.category._id]" class="cursor-pointer hover:underline"> {{productData.brand.name}} </a> </span> </p>
+          <p class="text-sm font-light">Category: <span class="text-blue-500"> <a [routerLink]="['/categories', productData.category._id]" class="cursor-pointer hover:underline"> {{productData.category.name}} </a> </span> </p>
           <div class="ratings">
             @if (productData.ratingsAverage> 4.5) {
               <div class="rating">
@@ -52,14 +75,22 @@
             <span class="text-base font-semibold mb-2">Price:</span>
             {{productData.price}} EGP 
           </p>
-          @if (productData.quantity>0) {
-            <p>In Stock</p>
-          }
+          <div class="stock">
+            @if (productData.quantity>0) {
+              <div class="stock my-1">
+                <span class="text-base font-bold text-white bg-green-500 px-1"> In Stock </span>
+              </div>
+            }@else {
+              <div class="stock my-1">
+                <span class="text-base font-bold text-white bg-red-500 px-1"> Out Of Stock </span>
+              </div>
+            }
+          </div>
           <div class="btns mt-2 space-x-3">
             <button (click)="addToCart(productData.id)" type="button" class="text-white bg-sky-500 p-2 rounded-md hover:bg-sky-700 transition-all duration-300"> 
               Add to cart <i class="fa-solid fa-cart-shopping ms-1"></i> 
             </button>
-            <button type="button" class="text-white bg-sky-500 p-2 rounded-md hover:bg-sky-700 transition-all duration-300"> 
+            <button (click)="addToWishlist(productData.id)"type="button" class="text-white bg-sky-500 p-2 rounded-md hover:bg-sky-700 transition-all duration-300"> 
               <i class="fa-regular fa-heart"></i>               
             </button>
           </div>
@@ -67,7 +98,7 @@
       </div>
     </div>
   </div>
-  <div class="container w-[80%] mx-auto mt-6 bg-white rounded">
+  <div class="container w-[80%] mx-auto my-6 bg-white rounded">
     <div class="grid grid-cols-1 lg:w-[85%] mx-auto">
       <div class="product md:flex md:justify-center p-2 items-start my-3">
         <div class="product-details flex flex-col text-start w-fit text-black my-3 p-3">

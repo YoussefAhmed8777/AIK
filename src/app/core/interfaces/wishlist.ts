@@ -1,46 +1,44 @@
-export interface Cart {
-  _id: string
-  cartOwner: string
-  products: Product[]
-  createdAt: string
-  updatedAt: string
-  __v: number
-  totalCartPrice: number
-}
-  
-export interface Product {
+export interface Wishlist {
+  status: string
   count: number
-  _id: string
-  product: Product2
-  price: number
+  data: Data[]
 }
-  
-export interface Product2 {
+
+export interface Data {
+  sold: number
+  images: string[]
   subcategory: Subcategory[]
+  ratingsQuantity: number
   _id: string
   title: string
+  slug: string
+  description: string
   quantity: number
+  price: number
   imageCover: string
   category: Category
   brand: Brand
   ratingsAverage: number
+  createdAt: string
+  updatedAt: string
+  __v: number
   id: string
 }
-  
+
 export interface Subcategory {
   _id: string
   name: string
   slug: string
   category: string
 }
-  
+
 export interface Category {
   _id: string
   name: string
   slug: string
   image: string
 }
-  
+
 export interface Brand {
   _id: string
   name: string

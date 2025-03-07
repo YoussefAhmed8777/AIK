@@ -3,69 +3,111 @@
     <!-- <div class="search">
       <input [(ngModel)]="searchTerm" type="text" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-[30%] mx-auto p-2.5"/>
     </div> -->
+    <div class="title text-center mt-10 mb-3">
+      <h2 class="font-bold text-3xl"> Our Latest Products </h2>
+    </div>
+    <div class="toasts relative -top-5 z-10">
+      @if (addedMessage!='') {
+        <div id="toast-success" class="absolute -end-3 flex items-center w-full max-w-xs p-4 mb-4 text-gray-500 bg-white rounded-lg shadow-md" role="alert">
+          <div class="inline-flex items-center justify-center shrink-0 w-6 h-6 text-green-500 bg-green-100 rounded-lg">
+              <svg class="w-4 h-4" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 20 20">
+                  <path d="M10 .5a9.5 9.5 0 1 0 9.5 9.5A9.51 9.51 0 0 0 10 .5Zm3.707 8.207-4 4a1 1 0 0 1-1.414 0l-2-2a1 1 0 0 1 1.414-1.414L9 10.586l3.293-3.293a1 1 0 0 1 1.414 1.414Z"/>
+              </svg>
+              <span class="sr-only">Check icon</span>
+          </div>
+          <div class="ms-3 text-sm font-normal">{{addedMessage}}</div>
+        </div>
+      }@else if(errorMessage!='') {
+        <div id="toast-danger" class="absolute -end-12 flex items-center w-full max-w-xs p-4 mb-4 text-gray-500 bg-white rounded-lg shadow-md" role="alert">
+          <div class="inline-flex items-center justify-center shrink-0 w-8 h-8 text-red-500 bg-red-100 rounded-lg">
+              <svg class="w-5 h-5" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 20 20">
+                  <path d="M10 .5a9.5 9.5 0 1 0 9.5 9.5A9.51 9.51 0 0 0 10 .5Zm3.707 11.793a1 1 0 1 1-1.414 1.414L10 11.414l-2.293 2.293a1 1 0 0 1-1.414-1.414L8.586 10 6.293 7.707a1 1 0 0 1 1.414-1.414L10 8.586l2.293-2.293a1 1 0 0 1 1.414 1.414L11.414 10l2.293 2.293Z"/>
+              </svg>
+              <span class="sr-only">Error icon</span>
+          </div>
+          <div class="ms-3 text-sm font-normal">{{errorMessage}}</div>
+        </div>
+      }
+    </div>
     <div class="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-5 gap-3 p-5">
-      @for (product of productList; track $index) {
-        <a [routerLink]="['/product-details', product.id]">  
-          <div class="w-full h-74 bg-white border border-gray-200 shadow-md hover:scale-105 transition-all duration-500">
-            <div class="card-img">
-                <img class="w-full h-60" src="{{product.imageCover}}" alt="product image"/>
-            </div>
-            <div class="card-body px-5 pb-5">
-              <a class="title cursor-pointer">
-                @if (product.title.length>15) {
-                  <h5 class="text-lg hover:underline font-semibold tracking-tight text-gray-900">{{product.title.slice(0,15)}}...</h5>
-                }@else {
-                  <h5 class="text-lg hover:underline font-semibold tracking-tight text-gray-900">{{product.title}}</h5>
-                }
+      @for (product of productList; track $index) { 
+          <div class="card w-full h-full mb-5 md:h-74 bg-white border border-gray-200 shadow-md hover:scale-105 transition-all duration-500">
+            <div data-aos="fade-up" class="flex flex-col md:relative">
+              <a [routerLink]="['/product-details', product.id]">
+                <div class="card-img">
+                  <img class="mx-auto md:w-full h-60" src="{{product.imageCover}}" alt="product image"/>
+                </div>
+                <div class="card-body px-5">
+                  <div class="title cursor-pointer">
+                        @if (product.title.length>15) {
+                          <h5 class="md:text-lg hover:underline font-semibold tracking-tight text-gray-900">{{product.title.slice(0,15)}}...</h5>
+                        }@else {
+                          <h5 class="md:text-lg hover:underline font-semibold tracking-tight text-gray-900">{{product.title}}</h5>
+                        }
+                  </div>
+                  <div class="ratings">
+                        @if (product.ratingsAverage> 4.5) {
+                          <div class="rating">
+                            <span class="text-sm font-thin hover:underline text-yellow-500"><i class="fa-solid fa-star"></i></span>
+                            <span class="text-sm font-thin hover:underline text-yellow-500"><i class="fa-solid fa-star"></i></span>
+                            <span class="text-sm font-thin hover:underline text-yellow-500"><i class="fa-solid fa-star"></i></span>
+                            <span class="text-sm font-thin hover:underline text-yellow-500"><i class="fa-solid fa-star"></i></span>
+                            <span class="text-sm font-thin hover:underline text-yellow-500"><i class="fa-solid fa-star"></i></span>
+                            <span class="text-sm font-thin hover:underline text-gray-900"> ({{product.ratingsAverage}}) </span>
+                          </div>
+                        }@else if (product.ratingsAverage> 4) {
+                          <div class="rating">
+                            <span class="text-sm font-thin hover:underline text-yellow-500"><i class="fa-solid fa-star"></i></span>
+                            <span class="text-sm font-thin hover:underline text-yellow-500"><i class="fa-solid fa-star"></i></span>
+                            <span class="text-sm font-thin hover:underline text-yellow-500"><i class="fa-solid fa-star"></i></span>
+                            <span class="text-sm font-thin hover:underline text-yellow-500"><i class="fa-solid fa-star"></i></span>
+                            <span class="text-sm font-thin hover:underline text-yellow-500"><i class="fa-solid fa-star-half-stroke"></i></span>
+                            <span class="text-sm font-thin hover:underline text-gray-900"> ({{product.ratingsAverage}}) </span>
+                          </div>
+                        }@else if (product.ratingsAverage >= 3) {
+                          <div class="rating">
+                            <span class="text-sm font-thin hover:underline text-yellow-500"><i class="fa-solid fa-star"></i></span>
+                            <span class="text-sm font-thin hover:underline text-yellow-500"><i class="fa-solid fa-star"></i></span>
+                            <span class="text-sm font-thin hover:underline text-yellow-500"><i class="fa-solid fa-star"></i></span>
+                            <span class="text-sm font-thin hover:underline text-yellow-500"><i class="fa-regular fa-star"></i></span>
+                            <span class="text-sm font-thin hover:underline text-yellow-500"><i class="fa-regular fa-star"></i></span>
+                            <span class="text-sm font-thin hover:underline text-gray-900"> ({{product.ratingsAverage}}) </span>
+                          </div>
+                        }@else {
+                          <div class="rating">
+                            <span class="text-sm font-thin hover:underline text-yellow-500"><i class="fa-solid fa-star"></i></span>
+                            <span class="text-sm font-thin hover:underline text-yellow-500"><i class="fa-solid fa-star"></i></span>
+                            <span class="text-sm font-thin hover:underline text-yellow-500"><i class="fa-regular fa-star"></i></span>
+                            <span class="text-sm font-thin hover:underline text-yellow-500"><i class="fa-regular fa-star"></i></span>
+                            <span class="text-sm font-thin hover:underline text-yellow-500"><i class="fa-regular fa-star"></i></span>
+                            <span class="text-sm font-thin hover:underline text-gray-900"> ({{product.ratingsAverage}}) </span>
+                          </div>
+                        }
+                  </div>
+                  <div class="quantity">
+                        @if (product.quantity>0) {
+                          <div class="stock my-1">
+                            <span class="text-base font-bold text-white bg-green-500 px-1"> In Stock </span>
+                          </div>
+                        }@else {
+                          <div class="stock my-1">
+                            <span class="text-base font-bold text-white bg-red-500 px-1"> Out Of Stock </span>
+                          </div>
+                        }
+                  </div>
+                  <div class="card-bottom">
+                    <div class="price">
+                      <span class="text-base font-bold hover:underline text-gray-900">{{product.price | currency:'EGP' }}</span>
+                    </div>
+                  </div>
+                </div>
               </a>
-              <div class="desc">
-                <span class="text-lg font-thin hover:underline text-gray-900">{{product.description.slice(0,20)}}..</span>
-              </div>
-              <div class="ratings">
-                @if (product.ratingsAverage> 4.5) {
-                  <div class="rating">
-                    <span class="text-sm font-thin hover:underline text-yellow-500"><i class="fa-solid fa-star"></i></span>
-                    <span class="text-sm font-thin hover:underline text-yellow-500"><i class="fa-solid fa-star"></i></span>
-                    <span class="text-sm font-thin hover:underline text-yellow-500"><i class="fa-solid fa-star"></i></span>
-                    <span class="text-sm font-thin hover:underline text-yellow-500"><i class="fa-solid fa-star"></i></span>
-                    <span class="text-sm font-thin hover:underline text-yellow-500"><i class="fa-solid fa-star"></i></span>
-                    <span class="text-sm font-thin hover:underline text-gray-900"> ({{product.ratingsAverage}}) </span>
-                  </div>
-                }@else if (product.ratingsAverage> 4) {
-                  <div class="rating">
-                    <span class="text-sm font-thin hover:underline text-yellow-500"><i class="fa-solid fa-star"></i></span>
-                    <span class="text-sm font-thin hover:underline text-yellow-500"><i class="fa-solid fa-star"></i></span>
-                    <span class="text-sm font-thin hover:underline text-yellow-500"><i class="fa-solid fa-star"></i></span>
-                    <span class="text-sm font-thin hover:underline text-yellow-500"><i class="fa-solid fa-star"></i></span>
-                    <span class="text-sm font-thin hover:underline text-yellow-500"><i class="fa-solid fa-star-half-stroke"></i></span>
-                    <span class="text-sm font-thin hover:underline text-gray-900"> ({{product.ratingsAverage}}) </span>
-                  </div>
-                }@else if (product.ratingsAverage >= 3) {
-                  <div class="rating">
-                    <span class="text-sm font-thin hover:underline text-yellow-500"><i class="fa-solid fa-star"></i></span>
-                    <span class="text-sm font-thin hover:underline text-yellow-500"><i class="fa-solid fa-star"></i></span>
-                    <span class="text-sm font-thin hover:underline text-yellow-500"><i class="fa-solid fa-star"></i></span>
-                    <span class="text-sm font-thin hover:underline text-yellow-500"><i class="fa-regular fa-star"></i></span>
-                    <span class="text-sm font-thin hover:underline text-yellow-500"><i class="fa-regular fa-star"></i></span>
-                    <span class="text-sm font-thin hover:underline text-gray-900"> ({{product.ratingsAverage}}) </span>
-                  </div>
-                }@else {
-                  <div class="rating">
-                    <span class="text-sm font-thin hover:underline text-yellow-500"><i class="fa-solid fa-star"></i></span>
-                    <span class="text-sm font-thin hover:underline text-yellow-500"><i class="fa-solid fa-star"></i></span>
-                    <span class="text-sm font-thin hover:underline text-yellow-500"><i class="fa-regular fa-star"></i></span>
-                    <span class="text-sm font-thin hover:underline text-yellow-500"><i class="fa-regular fa-star"></i></span>
-                    <span class="text-sm font-thin hover:underline text-yellow-500"><i class="fa-regular fa-star"></i></span>
-                    <span class="text-sm font-thin hover:underline text-gray-900"> ({{product.ratingsAverage}}) </span>
-                  </div>
-                }
-              </div>
-              <div class="price">
-                <span class="text-lg font-thin hover:underline text-gray-900">{{product.price | currency:'EGP' }}</span>
+              <div class="btns mx-3 px-2 md:absolute md:end-0 md:bottom-0">
+                <button type="button" (click)="addToCart(product.id)" class="rounded text-base bg-sky-500 font-bold text-center text-white p-1 px-2 me-1"> <i class="fa-solid fa-cart-plus"></i> </button>
+                <button type="button" (click)="addToWishlist(product.id)" class="rounded text-base bg-sky-500 font-bold text-center text-white p-1 px-2"> <i class="fa-solid fa-heart"></i> </button>
               </div>
             </div>
           </div>
-        </a>
       }
     </div>
   </section>
