@@ -41,7 +41,7 @@ export class AuthenticationService {
   }
 
   decodeToken(){
-    const token=JSON.stringify(localStorage.getItem('userToken'));
+    const token=localStorage.getItem('userToken') as string;
     this.userData = jwtDecode(token);
   }
 }

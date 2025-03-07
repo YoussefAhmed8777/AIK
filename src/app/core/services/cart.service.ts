@@ -8,7 +8,7 @@ import { Observable } from 'rxjs';
 export class CartService {
 
   http=inject(HttpClient);
-  userToken:string=JSON.stringify(localStorage.getItem('userToken')).replaceAll('"',''); //the error was that json stringify returns the value of the key with ""
+  userToken:string=localStorage.getItem('userToken') as string; //the error was that json stringify returns the value of the key with ""
 
   addToCart(id:string):Observable<any>{
     return this.http.post(`https://ecommerce.routemisr.com/api/v1/cart`,
