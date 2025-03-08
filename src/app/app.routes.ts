@@ -25,6 +25,8 @@ export const routes: Routes = [
     {path:"checkout/:id", canActivate:[authenticationGuard], loadComponent:()=>import("./pages/checkout/checkout.component").then((c)=>c.CheckoutComponent), title:"Checkout"},
     {path:"brands/:id", canActivate:[authenticationGuard], loadComponent:()=>import("./pages/brands/brands.component").then((c)=>c.BrandsComponent), title:"Brands"},
     {path:"categories/:id", canActivate:[authenticationGuard], loadComponent:()=>import("./pages/categories/categories.component").then((c)=>c.CategoriesComponent), title:"Categories"},
+    {path:"sub-categories/:id", canActivate:[authenticationGuard], loadComponent:()=>import("./pages/sub-categories/sub-categories.component").then((c)=>c.SubCategoriesComponent), title:"Categories"},
+    {path:"sub-brands/:id", canActivate:[authenticationGuard], loadComponent:()=>import("./pages/sub-brands/sub-brands.component").then((c)=>c.SubBrandsComponent), title:"Brands"},
     // {path:"deals", canActivate:[authenticationGuard], loadComponent:()=>import("./pages/deals/deals.component").then((c)=>c.DealsComponent), title:"Deals"},
     // {path:"about", loadComponent:()=>import("./pages/about/about.component").then((c)=>c.AboutComponent), title:"About"},
     // {path:"contact", loadComponent:()=>import("./pages/contact/contact.component").then((c)=>c.ContactComponent), title:"Contact"},
