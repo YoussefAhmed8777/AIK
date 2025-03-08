@@ -8,6 +8,7 @@ import { SearchPipe } from '../../shared/pipes/search.pipe';
 import * as AOS from 'aos';
 import { CartService } from '../../core/services/cart.service';
 import { WishlistService } from '../../core/services/wishlist.service';
+import { Data, Wishlist } from '../../core/interfaces/wishlist';
 
 @Component({
   selector: 'app-home',
@@ -19,7 +20,8 @@ export class HomeComponent implements OnInit {
   product=inject(ProductsService);
   cart=inject(CartService);
   wishList=inject(WishlistService);
-  productList:Product[]=[]
+  productList:Product[]=[];
+  wishlistId:string='';
   addedMessage:string='';  
   errorMessage:string='';  
 
@@ -60,6 +62,7 @@ export class HomeComponent implements OnInit {
       next:(res)=>{
         console.log(res);
         this.addedMessage=res.message;
+        this.wishlistId=res.data.id;
       },error:(err)=>{
         console.log(err);
         this.errorMessage=err.message;

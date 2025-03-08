@@ -5,18 +5,42 @@
           <span class="text-white self-center text-2xl font-semibold whitespace-nowrap">AIK</span>
       </a>
       @if (isLoggedIn==true) {
-        <div class="flex items-center space-x-6 rtl:space-x-reverse">
+        <div class="flex items-center space-x-3 rtl:space-x-reverse">
+          @if (WishlistCount>0) {
+            <button type="button" (click)="getWishlist()" routerLink="/wishlist" class="text-white p-2 rounded-md hover:scale-110 transition-all duration-300"> 
+              <i class="fa-solid fa-heart relative *:hover:bg-gray-200 hover:text-red-800 transition-all duration-300 ">
+                <span class="absolute w-2 h-2 me-3 bg-transparent transition-all duration-500 rounded-full -top-1 -end-4"></span>
+              </i>               
+            </button>
+          }@else {
+            <button type="button" (click)="getWishlist()" routerLink="/wishlist" class="text-white p-2 rounded-md hover:scale-110 transition-all duration-300"> 
+              <i class="fa-regular fa-heart"></i>               
+            </button>
+          }
+          <span class="text-white"> | </span>
           <a class="text-sm cursor-pointer text-white hover:underline" (click)="logout()">Logout</a>
         </div>
       }@else if(isLoggedIn==false) {
-        <div class="flex items-center space-x-6 rtl:space-x-reverse">
+        <div class="flex items-center space-x-3 rtl:space-x-reverse">
           <a routerLink="/register" class="text-sm cursor-pointer text-white hover:underline">Register</a>
           <span class="text-white cursor-default">|</span>
           <a routerLink="/login" class="text-sm cursor-pointer text-white hover:underline">Login</a>
         </div>
       }@else {
-        <div class="flex items-center space-x-6 rtl:space-x-reverse">
-          <a class="text-sm  text-white hover:underline" (click)="logout()">Logout</a>
+        <div class="flex items-center space-x-3 rtl:space-x-reverse">
+          @if (WishlistCount>0) {
+            <button type="button" (click)="getWishlist()" routerLink="/wishlist" class="text-white p-2 rounded-md hover:scale-110 transition-all duration-300"> 
+              <i class="fa-solid fa-heart relative *:hover:bg-gray-200 hover:text-red-800 transition-all duration-300 ">
+                <span class="absolute w-2 h-2 me-3 bg-transparent transition-all duration-500 rounded-full -top-1 -end-4"></span>
+              </i>               
+            </button>
+          }@else {
+            <button type="button" (click)="getWishlist()" routerLink="/wishlist" class="text-white p-2 rounded-md hover:scale-110 transition-all duration-300"> 
+              <i class="fa-regular fa-heart"></i>               
+            </button>
+          }
+          <span class="text-white"> | </span>
+          <a class="text-sm cursor-pointer text-white hover:underline" (click)="logout()">Logout</a>
         </div>
       }
   </div>

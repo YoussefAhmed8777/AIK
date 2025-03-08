@@ -104,7 +104,11 @@
               </a>
               <div class="btns mx-3 px-2 md:absolute md:end-0 md:bottom-0">
                 <button type="button" (click)="addToCart(product.id)" class="rounded text-base bg-sky-500 font-bold text-center text-white p-1 px-2 me-1"> <i class="fa-solid fa-cart-plus"></i> </button>
-                <button type="button" (click)="addToWishlist(product.id)" class="rounded text-base bg-sky-500 font-bold text-center text-white p-1 px-2"> <i class="fa-solid fa-heart"></i> </button>
+                @if (wishlistId == undefined ) {
+                  <button type="button" (click)="addToWishlist(product.id)" class="rounded text-base bg-sky-500 font-bold text-center text-white p-1 px-2"> <i class="fa-solid fa-heart"></i> </button>
+                }@else {
+                  <button type="button" (click)="addToWishlist(product.id)" class="rounded text-base bg-sky-500 font-bold text-center text-white p-1 px-2"> <i class="fa-regular fa-heart"></i> </button>
+                }
               </div>
             </div>
           </div>

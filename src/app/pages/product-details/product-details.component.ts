@@ -22,6 +22,7 @@ export class ProductDetailsComponent implements OnInit {
   wishList=inject(WishlistService);
   productData:Product={} as Product;
   id:string='';
+  wishlistId:string='';
   addedMessage:string='';  
   errorMessage:string='';  
 
@@ -64,6 +65,7 @@ export class ProductDetailsComponent implements OnInit {
       next:(res)=>{
         console.log(res);
         this.addedMessage=res.message;
+        this.wishlistId=res.data
       },error:(err)=>{
         console.log(err);
         this.errorMessage=err.message;

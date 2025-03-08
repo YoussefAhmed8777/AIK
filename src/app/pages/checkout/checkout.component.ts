@@ -20,7 +20,7 @@ export class CheckoutComponent implements OnInit {
     this.activatedRoute.paramMap.subscribe((p)=>{
       this.cartId=p.get('id') as string;
     })
-    console.log(this.cartId);
+    // console.log(this.cartId);
     this.checkOutForm= new FormGroup({
       details:new FormControl(null, [Validators.required, Validators.maxLength(150)]),
       phone: new FormControl(null, [Validators.required, Validators.pattern(/^01[0-2,5]{1}[0-9]{8}/)]),
@@ -33,6 +33,7 @@ export class CheckoutComponent implements OnInit {
     this.checkout.onlinePayment(this.cartId, this.checkOutForm.value).subscribe({
       next:(res)=>{
         console.log(res);
+        window.open(res.session.url, 'self');
       },error:(err)=>{
         console.log(err);
       }

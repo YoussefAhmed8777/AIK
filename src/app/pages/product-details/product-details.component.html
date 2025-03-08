@@ -90,9 +90,15 @@
             <button (click)="addToCart(productData.id)" type="button" class="text-white bg-sky-500 p-2 rounded-md hover:bg-sky-700 transition-all duration-300"> 
               Add to cart <i class="fa-solid fa-cart-shopping ms-1"></i> 
             </button>
-            <button (click)="addToWishlist(productData.id)"type="button" class="text-white bg-sky-500 p-2 rounded-md hover:bg-sky-700 transition-all duration-300"> 
-              <i class="fa-regular fa-heart"></i>               
-            </button>
+            @if (productData.id == wishlistId) {
+              <button (click)="addToWishlist(productData.id) "type="button" class="text-white bg-sky-500 p-2 rounded-md hover:bg-sky-700 transition-all duration-300"> 
+                <i class="fa-solid fa-heart"></i>               
+              </button>
+            }@else {
+              <button (click)="addToWishlist(productData.id) "type="button" class="text-white bg-sky-500 p-2 rounded-md hover:bg-sky-700 transition-all duration-300"> 
+                <i class="fa-regular fa-heart"></i>               
+              </button>
+            }
           </div>
         </div>
       </div>
