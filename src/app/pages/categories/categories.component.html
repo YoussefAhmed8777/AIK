@@ -1,5 +1,21 @@
 <section>
-  <div class="container my-20 mx-auto">
-    <p class="text-center text-2xl my-5 font-bold">Page Is Under Construction</p>
+  <div class="container my-10 mx-auto">
+    <div class="head">
+      <h2 class="font-bold text-2xl text-center"> Categories </h2>
+    </div>
+    <div class="body grid grid-cols-1 md:grid-cols-3 lg:grid-cols-5 my-3 gap-3">
+      @for (item of categoryData; track $index) {
+        <div class="card shadow-lg text-center mx-auto my-5 rounded-lg hover:scale-105 transition-all duration-500">
+          <a [routerLink]="['/sub-category', item._id]">
+            <div class="img mb-5">
+              <img [src]="item.image" class="w-52 h-52" alt="category image">
+            </div>
+            <div class="content my-5">
+              <h3 class="text-black text-xl font-bold hover:underline"> {{item.name}} </h3>
+            </div>
+          </a>
+        </div>
+      }
+    </div>
   </div>
 </section>
